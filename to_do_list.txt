@@ -1,0 +1,9 @@
+﻿수정할 목록.
+1. drug perturbation 에 대한 data를 result folder에 따로 text 파일을 통해 기록할 것. 분류를 쉽게 하기 위해서
+2. README에 linux에서만 된다는 것 쓰기.
+3. multiprocessing이 linux에서만 되는 문제 해결하기
+4. multiprocessing 들어가는 simulation 부분 깔끔하게 다듬기.
+5. set_parameter 함수 수정해서 console에서 일시적으로 변경할 수 있도록 하기. 그 외에도 set_parameter는 손 볼 것이 많음.
+6. python2에서 잘 돌아가는지 체크.
+7. 현재 exer 쓰는 function 읽어와 만드는 함수는 local에만 저장되어 있음. 속도 빠르게 할 수 있을까?
+8. output 함수들 좀 더 다듬기.
