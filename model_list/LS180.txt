@@ -1,0 +1,5 @@
+beta_catenin	OVER
+Ras	OVER
+PI3Ka	OVER
+TGFR	KO
+AXIN	KO

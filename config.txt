@@ -1,0 +1,16 @@
+﻿config
+
+folder containing models mutation information = model_list
+folder containing network model = network
+folder that will save the result = 
+
+file about drug perturbation = drug_combination.txt
+file about node information = nodes.txt
+file about logic information = logics.txt
+
+the number of processes for multiprocessing = 2
+the number of iteration(trajectories for each cell lines) = 1000
+the time step of each trajectory = 100
+the number of states discarded in result calculation = 50
+how many drug perturbation probabilities will be calculated except 0 = 10
+target nodes to observe the results = 

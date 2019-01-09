@@ -1,0 +1,6 @@
+APC	KO
+Smad2_3_4	KO
+p53	KO
+BRCA1	KO
+AXIN	KO
+Shc	KO

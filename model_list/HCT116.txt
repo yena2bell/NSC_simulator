@@ -1,0 +1,8 @@
+p14ARF	KO
+beta_catenin	OVER
+Ras	OVER
+PI3Ka	OVER
+TGFR	KO
+BRCA1	KO
+AXIN	KO
+Shc	KO
