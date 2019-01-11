@@ -131,12 +131,16 @@ def save_output_as_txtfile(obj_iterator, s_address_folder_output):
         file_output.write('\n')
         l_f_CASP3 = [dic_drug_prob_target_activation_rate[l_key]["CASP3"] for l_key in l_order_keys]
         l_viabilities = [1.0- f_value for f_value in l_f_CASP3]
-        dic_measures = measure_calculation.get_drug_response_measure(l_viabilities)
         
-        for s_measure in dic_measures.keys():
-            file_output.write(s_measure)
-            file_output.write(": "+str(dic_measures[s_measure]))
-            file_output.write("\n")
+        if l_viabilities[0] == 0:
+            file_output.write("viability is 0 at no perturbation\n")
+        else:
+            dic_measures = measure_calculation.get_drug_response_measure(l_viabilities)
+        
+            for s_measure in dic_measures.keys():
+                file_output.write(s_measure)
+                file_output.write(": "+str(dic_measures[s_measure]))
+                file_output.write("\n")
 
 #not used
 def read_nodes_data(s_address_nodes):
