@@ -45,7 +45,7 @@ def get_EC50(l_viabilities):
         if l_viabilities[i] == f_threshold:
             return i*f_interval_drug_concen
         if l_viabilities[i] > f_threshold and l_viabilities[i+1] < f_threshold:
-            return ((l_viabilities[i]-0.5)/(l_viabilities[i]-l_viabilities[i+1])+i)*f_interval_drug_concen#linear approximation
+            return ((l_viabilities[i]-f_threshold)/(l_viabilities[i]-l_viabilities[i+1])+i)*f_interval_drug_concen#linear approximation
     
     return 1
 
@@ -54,4 +54,4 @@ def get_AUC(l_concentrations):#average
     
 
 def get_efficacy(l_viabilities):
-    return l_viabilities[-1]
+    return 1.0 - l_viabilities[-1]

@@ -29,7 +29,7 @@ def set_config(s_address_NSC_folder):
     s_address_folder_mutations = find_info_in_config(l_s_lines, "folder containing models mutation information")
     s_address_folder_model = find_info_in_config(l_s_lines, "folder containing network model")
     s_address_folder_results = find_info_in_config(l_s_lines, "folder that will save the result")
-    s_address_file_drug = find_info_in_config(l_s_lines, "file about drug perturbation")
+    s_address_folder_drug = find_info_in_config(l_s_lines, "folder about drug perturbation")
     s_address_file_nodes = find_info_in_config(l_s_lines, "file about node information")
     s_address_file_logics = find_info_in_config(l_s_lines, "file about logic information")
     
@@ -48,7 +48,7 @@ def set_config(s_address_NSC_folder):
     
     print("the number of processes to use is ", i_num_processes)
     print("path of folder having model mutation is ",s_address_folder_mutations)
-    print("drug target information is recorded in ",s_address_file_drug)
+    print("drug target information is recorded in ",s_address_folder_drug, " folder")
     print("nodes are recored in ", s_address_file_nodes," file in the ", s_address_folder_model, " folder")
     print("logic information is in ",s_address_file_logics, " file in the ", s_address_folder_model, " folder")
     print(i_iteration," times of trajectories will be calculated")
@@ -67,14 +67,14 @@ def set_config(s_address_NSC_folder):
     s_address_folder_mutations= os.path.join(s_address_NSC_folder,s_address_folder_mutations)
     s_address_folder_model= os.path.join(s_address_NSC_folder,s_address_folder_model)
     s_address_folder_results=os.path.join(s_address_NSC_folder,s_address_folder_results)
-    s_address_file_drug = os.path.join(s_address_NSC_folder,s_address_file_drug)
+    s_address_folder_drug = os.path.join(s_address_NSC_folder,s_address_folder_drug)
     s_address_file_nodes= os.path.join(s_address_folder_model,s_address_file_nodes)
     s_address_file_logics=os.path.join(s_address_folder_model,s_address_file_logics)
     
     l_parameters = [s_address_folder_mutations,
                     s_address_folder_model,
                     s_address_folder_results,
-                    s_address_file_drug,
+                    s_address_folder_drug,
                     s_address_file_nodes,
                     s_address_file_logics,
                     i_num_processes,
@@ -96,7 +96,20 @@ def make_forder_for_output(s_address_result):
     new folder is maden in s_path. if not assined, basic folder address if current working directory.
     new folder name is (year)_(month)_(day)_(hour)h(minint)m(second)s
     example is 2018_09_08_09h05m12s"""
-    os.mkdir(s_address_result)
+#    if not os.path.exists(os.path.splitdrive(s_address_result)[0]):
+#        raise FileNotFoundError("you should choose appropriate drive!")
+# it is not appropriate for linux    
+    l_path_trajectory = []
+    s_address_upstream = s_address_result
+    s_folder = None
+    while not os.path.exists(s_address_upstream):
+        s_address_upstream, s_folder= os.path.split(s_address_upstream)
+        l_path_trajectory.append(s_folder)
+    
+    l_path_trajectory.reverse()
+    for s_folder in l_path_trajectory:
+        s_address_upstream = os.path.join(s_address_upstream, s_folder)
+        os.mkdir(s_address_upstream)
 
 def save_output_as_txtfile(obj_iterator, s_address_folder_output):
     s_name_output = "output_of_"+obj_iterator.output_model_name()+".txt"
@@ -131,12 +144,16 @@ def save_output_as_txtfile(obj_iterator, s_address_folder_output):
         file_output.write('\n')
         l_f_CASP3 = [dic_drug_prob_target_activation_rate[l_key]["CASP3"] for l_key in l_order_keys]
         l_viabilities = [1.0- f_value for f_value in l_f_CASP3]
-        dic_measures = measure_calculation.get_drug_response_measure(l_viabilities)
         
-        for s_measure in dic_measures.keys():
-            file_output.write(s_measure)
-            file_output.write(": "+str(dic_measures[s_measure]))
-            file_output.write("\n")
+        if l_viabilities[0] == 0:
+            file_output.write("viability is 0 at no perturbation\n")
+        else:
+            dic_measures = measure_calculation.get_drug_response_measure(l_viabilities)
+        
+            for s_measure in dic_measures.keys():
+                file_output.write(s_measure)
+                file_output.write(": "+str(dic_measures[s_measure]))
+                file_output.write("\n")
 
 #not used
 def read_nodes_data(s_address_nodes):
