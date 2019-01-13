@@ -23,6 +23,11 @@ def calculate_model_with_setted_parameter(t_input):
                                                     l_s_targets,
                                                     i_resolution_drug)
     obj_iterator.calculate_model_for_each_drug_concentrations()
+    
+    s_file_drug = os.path.split(s_address_file_drug)[1]
+    s_drug = os.path.splitext(s_file_drug)[0]
+    s_address_folder_output = os.path.join(s_address_folder_output, s_drug)
+    IOmodule.make_forder_for_output(s_address_folder_output)
     IOmodule.save_output_as_txtfile(obj_iterator, s_address_folder_output)
     return s_address_file_model
 
@@ -38,17 +43,19 @@ def main():
     s_address_NSC = os.path.dirname(os.path.realpath(__file__))
     l_parameters = IOmodule.set_config(s_address_NSC)
     
-    IOmodule.make_forder_for_output(l_parameters[2])
+    
     p = Pool(l_parameters[6])
     l_list_mutation_files = [os.path.join(l_parameters[0], s_filename_mutation)
                              for s_filename_mutation in os.listdir(l_parameters[0])]
+    l_list_drug_files = [os.path.join(l_parameters[3], s_drug_file) for s_drug_file in os.listdir(l_parameters[3])]
     
     s_address_file_inputnode = os.path.join(s_address_NSC,"input_nodes.txt")
-    l_list_inputs = [(s_address_file_model, l_parameters[3], 
+    l_list_inputs = [(s_address_file_model, s_address_drug_file, 
                       s_address_file_inputnode, l_parameters[2], 
                       l_parameters[7], l_parameters[8], l_parameters[9], 
                       l_parameters[10], l_parameters[11])
-                     for s_address_file_model in l_list_mutation_files]
+                     for s_address_file_model in l_list_mutation_files
+                     for s_address_drug_file in l_list_drug_files]
     
 
     #print(s_address_folder_models, s_address_file_drug, i_iteration, type(i_iteration), l_s_targets)
