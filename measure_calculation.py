@@ -46,7 +46,7 @@ def get_EC50(l_viabilities):
     if l_viabilities[-1] >= f_threshold:
         return 1
     
-    for i in range(i_num_points,0,-1):
+    for i in range(i_num_points-1,0,-1):
         if l_viabilities[i-1] >= f_threshold and l_viabilities[i] < f_threshold:
             return ((l_viabilities[i-1]-f_threshold)/(l_viabilities[i-1]-l_viabilities[i])+i-1)*f_interval_drug_concen#linear approximation
         if l_viabilities[i-1] == l_viabilities[i] and l_viabilities[i] == f_threshold:
