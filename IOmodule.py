@@ -95,7 +95,9 @@ def make_forder_for_output(s_address_result):
     """make folder for output text files. 
     new folder is maden in s_path. if not assined, basic folder address if current working directory.
     new folder name is (year)_(month)_(day)_(hour)h(minint)m(second)s
-    example is 2018_09_08_09h05m12s"""
+    example is 2018_09_08_09h05m12s
+    
+    s_address_result should be absolute address"""
 #    if not os.path.exists(os.path.splitdrive(s_address_result)[0]):
 #        raise FileNotFoundError("you should choose appropriate drive!")
 # it is not appropriate for linux    
